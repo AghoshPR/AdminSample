@@ -38,7 +38,7 @@
     </nav>
   
    <!-- navbar ends -->
-      
+   
   <table class="table">
       <thead>
           <tr>
@@ -63,6 +63,12 @@
           {% endfor %}
       </tbody>
   </table>
+
+  {% if messages%}
+  {% for message in messages %}
+    {{message}}
+  {% endfor %}
+  {% endif %} 
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"  ></script>
 

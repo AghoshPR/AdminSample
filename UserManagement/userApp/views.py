@@ -44,11 +44,12 @@ def registration(request):
         if User.objects.filter(username=reguser).exists():
             messages.error(request,'Username already exists!')
             return render(request,'register.html')
+        messages.success(request,'Registrtion Successful')
         newuser=User(username=reguser,email=regemail,password=regpass)
         newuser.set_password(regpass)
         newuser.save()
 
-        messages.success(request,'Registrtion Successful')
+        
         return redirect('login')
 
 
