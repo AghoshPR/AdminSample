@@ -1,0 +1,45 @@
+{% extends "loginpage.html" %}
+
+
+{% block body %}
+
+<div class="bg-img">
+  <div class="content">
+     <header>SignUp</header>
+     <form action="#" method="post">
+       {% csrf_token %}
+
+        <div class="field">
+           <span class="fa fa-user"></span>
+           <input type="text" required placeholder="Username" name="regusr">
+        </div>
+        <div class="field space">
+           <span class="fa fa-lock"></span>
+           <input type="password" class="pass-key" required placeholder="Password" name="regpass">
+           <span class="show">SHOW</span>
+        </div>
+
+        <div class="field space">
+          <span class="fa fa-lock"></span>
+          <input type="password" class="pass-key" required placeholder="confirm Password" name="regconpass">
+          <span class="show">SHOW</span>
+       </div>
+
+       <div class="field">
+        <span class="fa fa-user"></span>
+        <input type="text" required placeholder="Email" name="regemail">
+     </div>
+        
+        <div class="field">
+           <input type="submit" value="Register">
+        </div>
+     </form>
+     
+     
+  </div>
+</div>
+
+{% endblock %}
+
+
+

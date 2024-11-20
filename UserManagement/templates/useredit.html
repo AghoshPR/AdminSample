@@ -1,0 +1,16 @@
+
+
+{% block content %}
+<form action="{% url 'edituser' user.id %}" method="post">
+    {% csrf_token %}
+    <label for="">Username</label>
+    <input type="text" name="edituser" value="{{user.username}}" >
+
+    <label for="">Email</label>
+    <input type="email" name="editemail" value="{{user.email}}">
+
+    <button type="submit" >Save</button>
+
+
+</form>
+{% endblock %}
