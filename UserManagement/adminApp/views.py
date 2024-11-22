@@ -22,6 +22,8 @@ def adminlogin(request):
             if user.is_superuser:
                 login(request,user)
                 return redirect('admhomepage')  
+        else:
+            messages.success(request,'Ivalid User')
    
     return render(request,'adminlogin.html')
 

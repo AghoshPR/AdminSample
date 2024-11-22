@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 
 @never_cache
@@ -23,7 +25,7 @@ def login(request):
             return redirect('homepage')
     
         else:
-            error_message='invalid user'
+            error_message='invalid username or password'
 
             
     return render(request,'loginpage.html',{'error_message':error_message})
@@ -41,10 +43,18 @@ def registration(request):
             messages.error(request,'password donot match')
             return render(request,'register.html')
         
+
         if User.objects.filter(username=reguser).exists():
             messages.error(request,'Username already exists!')
             return render(request,'register.html')
-        messages.success(request,'Registrtion Successful')
+        
+        try:
+            validate_email(regemail)
+        except ValidationError:
+            messages.error(request,'Invalid email format')
+            return render(request,'register.html')
+
+        messages.success(request,'Registration Successful')
         newuser=User(username=reguser,email=regemail,password=regpass)
         newuser.set_password(regpass)
         newuser.save()

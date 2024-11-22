@@ -2,6 +2,9 @@
 
 
 {% block body %}
+<div class="alert alert-success" role="alert">
+   
+ </div>
 <div class="bg-img">
     <div class="content">
        <header>Admin</header>
@@ -23,6 +26,14 @@
           </div>
        </form>
        
+       {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-danger text-center mx-auto mt-5" role="alert" >
+      <p class="text-center mx-auto" style="color: red;padding-top: 10px;">{{ message }}</p>
+      </div>
+      {% endfor %}
+    {% endif %}
+
        
     </div>
  </div>

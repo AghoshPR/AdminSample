@@ -8,12 +8,17 @@
       <title>Login</title>
       <link rel="stylesheet" href="{% static 'css/style.css' %}" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
    </head>
    <body>
     {% block body %}
+    
 
+      
       <div class="bg-img">
+      
          <div class="content">
+            
             <header>Login</header>
             <form action="#" method="post">
               {% csrf_token %}
@@ -45,6 +50,12 @@
               
               <a href="{% url 'adminhome' %}">Admin</a>
            </div>
+
+           {% if error_message %}
+    <div class="alert alert-danger text-center mx-auto mt-5" role="alert" >
+      <p class="text-center mx-auto" style="color: red;padding-top: 10px;">{{ error_message }}</p>
+   </div>
+    {% endif %}
          </div>
       </div>
       {% endblock %}
