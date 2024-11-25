@@ -44,7 +44,7 @@ def registration(request):
         regemail=request.POST['regemail']
 
         if regpass != regconpass:
-            messages.error(request,'password donot match')
+            messages.error(request,'Enter Password Correctly')
             return render(request,'register.html')
         
 

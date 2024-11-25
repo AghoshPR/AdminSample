@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.db.models import Q
 from django.contrib import messages
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 #................adminlogin.................
 @never_cache
@@ -56,6 +58,43 @@ def adminlogout(request):
 
 #................adminHomepage ends.................
 
+# ...............adminUserCreate....................
+
+def adduser(request):
+
+    if request.POST:
+        cuser=request.POST['cuser'].strip()
+        cpass=request.POST['cpass'].strip()
+        cemail=request.POST['cemail'].strip()
+
+        if not cuser or not cpass or not cemail:
+            messages.error(request,'All fields are Required')
+            return render(request,'adduser.html')
+        
+        try:
+            validate_email(cemail)
+        except ValidationError:
+            messages.error(request, 'Invalid email format.')
+            return render(request, 'adduser.html')
+
+        if len(cpass)<6:
+            messages.error(request,'Password must contain 6 characters')
+            return render(request,'adduser.html')
+
+        if User.objects.filter(username=cuser).exists():
+            messages.error(request,'User already Exists.')
+        else:
+            User.objects.create_user(username=cuser,password=cpass,email=cemail)
+            messages.success(request,'User Created Successfully')
+            return redirect('admhomepage')
+
+
+    return render(request,'adduser.html')
+
+
+# ...............adminUserCreate ends....................
+
+
 #................adminDelete.................
 @never_cache
 def adminDelete(request,user_id):
@@ -73,13 +112,22 @@ def editUser(request,user_id):
     user=get_object_or_404(User,id=user_id)
     
     if request.POST:
-        edituser=request.POST['edituser']
-        editemail=request.POST['editemail']
+        edituser=request.POST['edituser'].strip()
+        editemail=request.POST['editemail'].strip()
+
+        if not edituser:
+            messages.error(request,'username cannot be Empty!')
+            return render(request,'useredit.html',{'user':user})
+
+        if not editemail:
+            messages.error(request,'Email cannot be Empty!')
+            return render(request,'useredit.html',{'user':user})
+
 
         user.username=edituser
         user.email=editemail
         user.save()
-        messages.success(request,'User deatils updated succefully')
+        messages.success(request,'User deatils updated successfully')
         return redirect('admhomepage')
           
     return render(request,'useredit.html',{'user':user})

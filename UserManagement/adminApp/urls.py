@@ -5,6 +5,7 @@ urlpatterns = [
     path('adminhome/', views.adminlogin, name='adminhome'),
     path('admhomepage/', views.adminhome, name='admhomepage'),
     path('admlogout/', views.adminlogout, name='admlogout'),
+    path('create/', views.adduser, name='create'),
     path('userdelete/<int:user_id>/', views.adminDelete, name='userdelete'),
     path('edituser/<int:user_id>/', views.editUser, name='edituser')
 
