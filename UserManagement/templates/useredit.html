@@ -1,16 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UserEdit</title>
+    <link rel="stylesheet" href="{% static 'css/edit.css' %}" />
+</head>
+<body>
+    <div id="form-main">
+        <div id="form-div">
+          <form class="form" id="form1" action="{% url 'edituser' user.id %}" method="post" >
+            {% csrf_token %}
+            <p class="name">
+                USERNAME
+              <input name="edituser" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Name" value="{{user.username}}" />
+            </p>
+            
+            <p class="email">
+                EMAIL
+              <input name="editemail" type="text" class="validate[required,custom[email]] feedback-input" id="email" placeholder="Email" value="{{user.email}}" />
+            </p>
+            
+            
+            <div class="submit">
+              <input type="submit" value="SAVE" id="button-blue"/>
+              <div class="ease"></div>
+            </div>
+          </form>
+        </div>
 
-
-{% block content %}
-<form action="{% url 'edituser' user.id %}" method="post">
-    {% csrf_token %}
-    <label for="">Username</label>
-    <input type="text" name="edituser" value="{{user.username}}" >
-
-    <label for="">Email</label>
-    <input type="email" name="editemail" value="{{user.email}}">
-
-    <button type="submit" >Save</button>
-
-
-</form>
-{% endblock %}
+        
+</body>
+</html>

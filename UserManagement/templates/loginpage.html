@@ -50,6 +50,14 @@
               
               <a href="{% url 'adminhome' %}">Admin</a>
            </div>
+           {% if messages %}
+           {% for message in messages %}
+          <div class="alert alert-danger text-center mx-auto mt-5" role="alert" >
+          <p class="text-center mx-auto" style="color: red;padding-top: 10px;">{{ message }}</p>
+          </div>
+          {% endfor %}
+        {% endif %}
+    
 
            {% if error_message %}
     <div class="alert alert-danger text-center mx-auto mt-5" role="alert" >

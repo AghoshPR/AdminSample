@@ -23,7 +23,7 @@ def adminlogin(request):
                 login(request,user)
                 return redirect('admhomepage')  
         else:
-            messages.success(request,'Ivalid User')
+            messages.success(request,'Invalid User')
    
     return render(request,'adminlogin.html')
 
@@ -57,18 +57,18 @@ def adminlogout(request):
 #................adminHomepage ends.................
 
 #................adminDelete.................
-
+@never_cache
 def adminDelete(request,user_id):
     user=User.objects.get(id=user_id)
     user.delete()
-    messages.success(request,'deleted successfully')
+    messages.success(request,'Deleted successfully')
     return redirect(adminhome)
 
 
 #................adminDelete Ends.................
 
 #................adminEdit...................
-
+@never_cache
 def editUser(request,user_id):
     user=get_object_or_404(User,id=user_id)
     
@@ -79,7 +79,7 @@ def editUser(request,user_id):
         user.username=edituser
         user.email=editemail
         user.save()
-        messages.success(request,'user deatils updated succefully')
+        messages.success(request,'User deatils updated succefully')
         return redirect('admhomepage')
           
     return render(request,'useredit.html',{'user':user})
