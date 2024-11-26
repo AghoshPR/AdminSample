@@ -50,7 +50,7 @@ def adminhome(request):
 }
     return render(request,'adminhome.html',context) 
 
-
+@login_required(login_url='login')
 def adminlogout(request):
     logout(request)
     return redirect('login')
@@ -59,7 +59,7 @@ def adminlogout(request):
 #................adminHomepage ends.................
 
 # ...............adminUserCreate....................
-
+@login_required(login_url='login')
 def adduser(request):
 
     if request.POST:
@@ -96,7 +96,9 @@ def adduser(request):
 
 
 #................adminDelete.................
+@login_required(login_url='login')
 @never_cache
+
 def adminDelete(request,user_id):
     user=User.objects.get(id=user_id)
     user.delete()
@@ -107,6 +109,7 @@ def adminDelete(request,user_id):
 #................adminDelete Ends.................
 
 #................adminEdit...................
+@login_required(login_url='login')
 @never_cache
 def editUser(request,user_id):
     user=get_object_or_404(User,id=user_id)
@@ -123,6 +126,11 @@ def editUser(request,user_id):
             messages.error(request,'Email cannot be Empty!')
             return render(request,'useredit.html',{'user':user})
 
+        try:
+            validate_email(editemail)
+        except ValidationError:
+            messages.error(request, 'Invalid email format.')
+            return render(request, 'useredit.html',{'user':user})
 
         user.username=edituser
         user.email=editemail

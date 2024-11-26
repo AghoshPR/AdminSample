@@ -31,6 +31,7 @@ def login(request):
     return render(request,'loginpage.html',{'error_message':error_message})
     
 @never_cache
+@login_required(login_url='login')
 def registration(request):
 
     if request.user.is_authenticated:
@@ -71,12 +72,11 @@ def registration(request):
 
 @never_cache
 @login_required(login_url='login')
-
-@never_cache
 def homepage(request):
 
     return render(request,'userhome.html')
 
+@login_required(login_url='login')
 def logout(request):
     userlogout(request)
     return redirect('login')
