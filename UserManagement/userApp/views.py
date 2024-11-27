@@ -31,7 +31,6 @@ def login(request):
     return render(request,'loginpage.html',{'error_message':error_message})
     
 @never_cache
-@login_required(login_url='login')
 def registration(request):
 
     if request.user.is_authenticated:
@@ -62,12 +61,8 @@ def registration(request):
         messages.success(request,'Registration Successful')
         newuser=User(username=reguser,email=regemail,password=regpass)
         newuser.set_password(regpass)
-        newuser.save()
-
-        
+        newuser.save()  
         return redirect('login')
-
-
     return render(request,'register.html')
 
 @never_cache

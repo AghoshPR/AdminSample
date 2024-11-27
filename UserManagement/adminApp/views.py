@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect,get_object_or_404,HttpResponse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -38,16 +38,24 @@ def adminlogin(request):
 @login_required(login_url='login')
 @never_cache
 def adminhome(request):
-    query=request.GET.get('q','')
-    if query:
-        users=User.objects.filter(Q(username__icontains=query) | Q(email__icontains=query) ) #filtering the users
+    if not request.user.is_superuser:
+        return HttpResponse("You are restricted to enter this page")
+    
+    users=User.objects.all()
+
+    search_query = request.GET.get('q', '') 
+
+    if search_query:
+        
+        users = User.objects.filter(username__icontains=search_query)
     else:
-        users=User.objects.all()
+        
+        users = User.objects.all()
 
     context = {
-    'users': users, 
-    'query': query  
-}
+        'users': users,
+        'search_query': search_query, 
+    }
     return render(request,'adminhome.html',context) 
 
 @login_required(login_url='login')
@@ -61,6 +69,9 @@ def adminlogout(request):
 # ...............adminUserCreate....................
 @login_required(login_url='login')
 def adduser(request):
+
+    if not request.user.is_superuser:
+        return HttpResponse("You are restricted to enter this page")
 
     if request.POST:
         cuser=request.POST['cuser'].strip()
@@ -100,6 +111,10 @@ def adduser(request):
 @never_cache
 
 def adminDelete(request,user_id):
+
+    if not request.user.is_superuser:
+        return HttpResponse("You are restricted to enter this page")    
+
     user=User.objects.get(id=user_id)
     user.delete()
     messages.success(request,'Deleted successfully')
@@ -112,6 +127,11 @@ def adminDelete(request,user_id):
 @login_required(login_url='login')
 @never_cache
 def editUser(request,user_id):
+
+
+    if not request.user.is_superuser:
+        return HttpResponse("You are restricted to enter this page")
+    
     user=get_object_or_404(User,id=user_id)
     
     if request.POST:
