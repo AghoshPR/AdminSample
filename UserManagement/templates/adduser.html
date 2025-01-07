@@ -24,17 +24,17 @@
             {% csrf_token %}
             <p class="name">
                 USERNAME
-              <input name="cuser" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Name" value="{{user.username}}" />
+              <input name="cuser" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Name"  />
             </p>
             
             <p class="name">
                 PASSWORD
-              <input name="cpass" type="password" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Name" value="{{user.username}}" />
+              <input name="cpass" type="password" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Name"  />
             </p>
 
             <p class="email">
                 EMAIL
-              <input name="cemail" type="email" class="validate[required,custom[email]] feedback-input" id="email" placeholder="Email" value="{{user.email}}" />
+              <input name="cemail" type="email" class="validate[required,custom[email]] feedback-input" id="email" placeholder="Email"  />
             </p>
             
             

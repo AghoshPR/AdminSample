@@ -16,10 +16,15 @@ def login(request):
         return redirect('homepage')
 
     if request.POST:
+        
         username=request.POST['usr']
         password=request.POST['psd']
 
+        if not request.user.is_active:
+            messages.error(request,'User is blocked')
+            return redirect("login")
         user=authenticate(username=username,password=password)
+
         if user:
             userlogin(request,user)
             return redirect('homepage')
@@ -35,7 +40,6 @@ def registration(request):
 
     if request.user.is_authenticated:
         return redirect('homepage')
-
 
     if request.POST:
         reguser=request.POST['regusr']
@@ -65,9 +69,11 @@ def registration(request):
         return redirect('login')
     return render(request,'register.html')
 
-@never_cache
+
 @login_required(login_url='login')
+@never_cache
 def homepage(request):
+
 
     return render(request,'userhome.html')
 

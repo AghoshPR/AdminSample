@@ -11,7 +11,7 @@ from django.core.exceptions import ValidationError
 #................adminlogin.................
 @never_cache
 def adminlogin(request):
-
+    
     if request.user.is_authenticated:
         return redirect('admhomepage')
     
